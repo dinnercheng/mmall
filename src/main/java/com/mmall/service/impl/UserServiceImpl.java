@@ -7,7 +7,6 @@ import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
-import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,7 +90,9 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-    public ServerResponse<String> forgetPassword(String username, String passwordNew, String forgetToken) {
+
+
+    public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
         if (StringUtils.isBlank(forgetToken)) {
             return ServerResponse.createByErrorMessage("Token is null");
         }
@@ -128,6 +129,9 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("Update password failed");
     }
 
+
+
+
     public ServerResponse<String> checkValid(String str, String type) {
         if (StringUtils.isNotBlank(type)) {
             if (Const.USERNAME.equals(type)) {
@@ -150,7 +154,9 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-    public ServerResponse<User> updateUserInfo(User user){
+
+
+    public ServerResponse<User> updateInformation(User user){
         //username是不能被更新的
         //email也要进行一个校验,校验新的email是不是已经存在,并且存在的email如果相同的话,不能是我们当前的这个用户的.
         int resultCount = userMapper.checkEmailByUserId(user.getEmail(),user.getId());
@@ -186,4 +192,6 @@ public class UserServiceImpl implements IUserService {
         }
         return ServerResponse.createByError();
     }
+
+
 }
